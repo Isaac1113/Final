@@ -1,4 +1,5 @@
 // Creating a shell for Part 1 of final project
+#include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
