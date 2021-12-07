@@ -105,7 +105,7 @@ int editorReadKey() {
         if (read(STDIN_FILENO, &seq[1], 1) != 1) return '\x1b';
 
         if (seq[0] == '[') {
-            if (seq[1] >= '0' && seq[1] <= '9'){
+            if (seq[1] >= '0' && seq[1] <= '9') {
                 if (read(STDIN_FILENO, &seq[2], 1) != 1) return '\x1b';
                 if (seq[2] == '~') {
                     switch (seq[1]) {
@@ -128,7 +128,7 @@ int editorReadKey() {
                     case 'F': return END_KEY;
                 }
             }
-        } else if (seq[0] == '0') {
+        } else if (seq[0] == 'O') {
             switch (seq[1]) {
                 case 'H': return HOME_KEY;
                 case 'F': return END_KEY;
@@ -236,7 +236,7 @@ void editorOpen(char *filename) {
     char *line = NULL;
     size_t linecap = 0;
     ssize_t linelen;
-    while((linelen = getline(&line, &linecap, fp)) != -1) {
+    while ((linelen = getline(&line, &linecap, fp)) != -1) {
         while (linelen > 0 && (line[linelen - 1] == '\n' || 
                                 line[linelen - 1] == '\r'))
             linelen--;
@@ -327,7 +327,7 @@ void editorDrawStatusBar(struct abuf *ab) {
     char status[80], rstatus[80];
     int len = snprintf(status, sizeof(status), "%.20s - %d lines",
         E.filename ? E.filename : "[No Name]", E.numrows);
-    int rlen = snprintf(status, sizeof(rstatus), "%d/%d",
+    int rlen = snprintf(rstatus, sizeof(rstatus), "%d/%d",
         E.cy + 1, E.numrows);
     if (len > E.screencols) len = E.screencols;
     abAppend(ab, status, len);
